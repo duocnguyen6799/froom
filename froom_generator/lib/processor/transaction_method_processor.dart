@@ -1,16 +1,16 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:froom_generator/processor/error/transaction_method_processor_error.dart';
 import 'package:froom_generator/processor/processor.dart';
 import 'package:froom_generator/value_object/transaction_method.dart';
 
 // The migration is complete
 class TransactionMethodProcessor implements Processor<TransactionMethod> {
-  final MethodElement _methodElement;
+  final MethodElement2 _methodElement;
   final String _daoGetterName;
   final String _databaseName;
 
   TransactionMethodProcessor(
-    final MethodElement methodElement,
+    final MethodElement2 methodElement,
     final String daoGetterName,
     final String databaseName,
   )   : _methodElement = methodElement,

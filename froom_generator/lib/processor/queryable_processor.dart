@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:collection/collection.dart';
 import 'package:froom_annotation/froom_annotation.dart' as annotations;
 import 'package:froom_generator/misc/extension/set_extension.dart';
@@ -20,7 +20,7 @@ abstract class QueryableProcessor<T extends Queryable> extends Processor<T> {
   final QueryableProcessorError _queryableProcessorError;
 
   @protected
-  final ClassElement classElement;
+  final ClassElement2 classElement;
 
   final Set<TypeConverter> queryableTypeConverters;
 
@@ -38,8 +38,8 @@ abstract class QueryableProcessor<T extends Queryable> extends Processor<T> {
       throw _queryableProcessorError.prohibitedMixinUsage;
     }
     final fields = [
-      ...classElement.fields,
-      ...classElement.allSupertypes.expand((type) => type.element.fields),
+      ...classElement.fields2,
+      ...classElement.allSupertypes.expand((type) => type.element3.fields2),
     ];
 
     return fields
@@ -53,7 +53,7 @@ abstract class QueryableProcessor<T extends Queryable> extends Processor<T> {
 
   @protected
   String getConstructor(final List<Field> fields) {
-    final constructorParameters = classElement.constructors
+    final constructorParameters = classElement.constructors2
         .firstWhereOrNull((element) => element.isPublic && !element.isFactory)
         ?.formalParameters;
 
@@ -120,7 +120,7 @@ abstract class QueryableProcessor<T extends Queryable> extends Processor<T> {
   }
 }
 
-extension on FieldElement {
+extension on FieldElement2 {
   bool shouldBeIncluded() {
     final isIgnored = hasAnnotation(annotations.ignore.runtimeType);
     return !(isStatic || isSynthetic || isIgnored);

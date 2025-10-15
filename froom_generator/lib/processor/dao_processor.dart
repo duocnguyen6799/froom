@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:froom_annotation/froom_annotation.dart' as annotations;
 import 'package:froom_generator/misc/extension/type_converter_element_extension.dart';
 import 'package:froom_generator/misc/type_utils.dart';
@@ -21,7 +21,7 @@ import 'insertion_method_processor.dart';
 
 // The migration is complete
 class DaoProcessor extends Processor<Dao> {
-  final ClassElement _classElement;
+  final ClassElement2 _classElement;
   final String _daoGetterName;
   final String _databaseName;
   final List<Entity> _entities;
@@ -29,7 +29,7 @@ class DaoProcessor extends Processor<Dao> {
   final Set<TypeConverter> _typeConverters;
 
   DaoProcessor(
-    final ClassElement classElement,
+    final ClassElement2 classElement,
     final String daoGetterName,
     final String databaseName,
     final List<Entity> entities,
@@ -45,10 +45,9 @@ class DaoProcessor extends Processor<Dao> {
   @override
   Dao process() {
     final name = _classElement.displayName;
-    final allSupertypesMethods = _classElement.allSupertypes.expand((type) => type.methods).toList();
-    final methods = <MethodElement>[
-      ..._classElement.methods,
-      ...allSupertypesMethods
+    final methods = [
+      ..._classElement.methods2,
+      ..._classElement.allSupertypes.expand((type) => type.methods2)
     ];
 
     final typeConverters = Set.of(_typeConverters)
@@ -81,7 +80,7 @@ class DaoProcessor extends Processor<Dao> {
   }
 
   List<QueryMethod> _getQueryMethods(
-    final List<MethodElement> methods,
+    final List<MethodElement2> methods,
     final Set<TypeConverter> typeConverters,
   ) {
     return methods
@@ -95,7 +94,7 @@ class DaoProcessor extends Processor<Dao> {
   }
 
   List<InsertionMethod> _getInsertionMethods(
-    final List<MethodElement> methodElements,
+    final List<MethodElement2> methodElements,
   ) {
     return methodElements
         .where(
@@ -105,7 +104,7 @@ class DaoProcessor extends Processor<Dao> {
   }
 
   List<UpdateMethod> _getUpdateMethods(
-    final List<MethodElement> methodElements,
+    final List<MethodElement2> methodElements,
   ) {
     return methodElements
         .where(
@@ -116,7 +115,7 @@ class DaoProcessor extends Processor<Dao> {
   }
 
   List<DeletionMethod> _getDeletionMethods(
-    final List<MethodElement> methodElements,
+    final List<MethodElement2> methodElements,
   ) {
     return methodElements
         .where((methodElement) =>
@@ -127,7 +126,7 @@ class DaoProcessor extends Processor<Dao> {
   }
 
   List<TransactionMethod> _getTransactionMethods(
-    final List<MethodElement> methodElements,
+    final List<MethodElement2> methodElements,
   ) {
     return methodElements
         .where((methodElement) =>

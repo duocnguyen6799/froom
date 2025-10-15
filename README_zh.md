@@ -49,11 +49,10 @@ Froom 基于 **Floor 1.5.0**，因为 Floor 不再积极维护。**Froom** 旨�
 
 请根据您的 `source_gen` 依赖选择合适的版本：
 
-| source_gen Version | Froom Version |
-|--------------------|---------------|
-| 4.x.x             | 4.x.x         |
-| 3.x.x             | 3.x.x         |
-| 2.x.x             | 2.0.4         |
+| source_gen 版本 | Froom 版本 |
+|----------------|------------|
+| 3.x.x 及以上   | 3.x.x      |
+| 2.x.x          | 2.0.4      |
 
 ## 从 Floor 迁移
 
